@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Todo } from '../models/todo.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,5 +13,9 @@ export class TodoService {
 
   getTodos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/getTodos`);
+  }
+
+  addTodo(todo: Todo): any{
+    return this.http.post(`${this.apiUrl}/addTodo`, todo);
   }
 }
