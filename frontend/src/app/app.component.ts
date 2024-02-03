@@ -6,6 +6,7 @@ import { TodoService } from './Services/todo.service';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Todo } from './models/todo.model';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,12 +17,13 @@ import { AddTodoComponent } from './components/add-todo/add-todo.component';
 })
 export class AppComponent implements OnInit {
   title = 'frontend';
-  todos: any[] = [];
+  todos: Todo[];
   showAdd = true;
 
   readonly #todoService = inject(TodoService);
   readonly #destroyRef = inject(DestroyRef);
   readonly #modalService = inject(NgbModal);
+
   ngOnInit(): void {
     this.#fetch();
   }
@@ -48,7 +50,13 @@ export class AppComponent implements OnInit {
     );*/
   }
 
-
+  deleteTodo(todo: Todo) {
+    if(todo.id){
+      this.#todoService.deleteTodo(todo.id)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe(() => this.#fetch());
+    }
+  }
 
   #fetch(){
     this.#todoService

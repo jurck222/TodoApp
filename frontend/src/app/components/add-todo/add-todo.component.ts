@@ -13,8 +13,8 @@ import { FormsModule } from '@angular/forms';
 			<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 		</div>
 		<div class="modal-body">
-    Title: <input [(ngModel)]="todo.title" type="text"> <br>
-    Description:  <input [(ngModel)]="todo.description" type="text"> <br>
+    Title: <input [(ngModel)]="todo.title" class="form-control" type="text"> <br>
+    Description:  <input [(ngModel)]="todo.description" class="form-control" type="text"> <br>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>

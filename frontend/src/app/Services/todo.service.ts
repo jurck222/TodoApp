@@ -18,4 +18,8 @@ export class TodoService {
   addTodo(todo: Todo): any{
     return this.http.post(`${this.apiUrl}/addTodo`, todo);
   }
+
+  deleteTodo(id:number): any{
+    return this.http.delete(`${this.apiUrl}/deleteTodo/${id}`);
+  }
 }
