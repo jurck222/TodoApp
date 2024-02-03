@@ -1,10 +1,11 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { TodoService } from './Services/todo.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Todo } from './models/todo.model';
+import { AddTodoComponent } from './components/add-todo/add-todo.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -15,17 +16,27 @@ import { Todo } from './models/todo.model';
 })
 export class AppComponent implements OnInit {
   title = 'frontend';
-  todoService = inject(TodoService);
   todos: any[] = [];
-  destroyRef = inject(DestroyRef);
   showAdd = true;
 
+  readonly #todoService = inject(TodoService);
+  readonly #destroyRef = inject(DestroyRef);
+  readonly #modalService = inject(NgbModal);
   ngOnInit(): void {
     this.#fetch();
   }
 
   clickAdd(){
-    this.showAdd = false;
+    const modalRef = this.#modalService.open(AddTodoComponent);
+	
+    modalRef.result.then((todo) => {
+      if (todo) {
+        this.#todoService.addTodo(todo)
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe(() => this.#fetch());
+      }
+    });
+    /*
     const todo: Todo = {
       title: "todo from frontend",
       description: "this todo was sent from frontend"
@@ -34,13 +45,15 @@ export class AppComponent implements OnInit {
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(
       () => this.#fetch()
-    );
+    );*/
   }
-  
-   #fetch(){
-    this.todoService
+
+
+
+  #fetch(){
+    this.#todoService
     .getTodos()
-    .pipe(takeUntilDestroyed(this.destroyRef))
+    .pipe(takeUntilDestroyed(this.#destroyRef))
     .subscribe(
       (data) => { this.todos = data; }
     );
