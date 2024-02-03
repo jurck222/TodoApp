@@ -1,9 +1,24 @@
-<div>
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+    <h1 >TodoApp </h1> 
+    </div>
+    <div  class="col-md-auto">
+      @if(showAdd){
+        <img (click)="clickAdd()" src="../assets/add.png"/>
+      }
+    </div>
+  </div>
+  
+  <div class="row justify-content-md-center">
+  <div class="col"></div>
+  <div  class="col">
   @if (todos) {
-  <ul>
     @for (todo of todos; track $index) {
-    <li>{{ todo.title }} - {{ todo.description }}</li>
+    <p>{{ todo.title }} <input type="checkbox" /></p>
     }
-  </ul>
   }
+  </div>
+  <div class="col"></div>
+  </div>
 </div>
