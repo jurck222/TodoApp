@@ -6,6 +6,7 @@ import { TodoService } from './Services/todo.service';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Todo } from './models/todo.model';
 import { AddTodoComponent } from './components/add-todo/add-todo.component';
+import { EditTodoComponent } from './components/edit-todo/edit-todo.component';
 
 @Component({
   selector: 'app-root',
@@ -38,16 +39,18 @@ export class AppComponent implements OnInit {
         .subscribe(() => this.#fetch());
       }
     });
-    /*
-    const todo: Todo = {
-      title: "todo from frontend",
-      description: "this todo was sent from frontend"
-    }
-    this.todoService.addTodo(todo)
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe(
-      () => this.#fetch()
-    );*/
+  }
+
+  openTodo(todo: Todo){
+    const modalRef = this.#modalService.open(EditTodoComponent);
+    modalRef.componentInstance.todo = input(todo);
+    modalRef.result.then((todo) => {
+      if(todo){
+        this.#todoService.updateTodo(todo.id, todo)
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe(() => this.#fetch());
+      }
+    });
   }
 
   deleteTodo(todo: Todo) {

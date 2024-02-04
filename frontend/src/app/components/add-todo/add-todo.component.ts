@@ -23,16 +23,14 @@ import { FormsModule } from '@angular/forms';
   `,
   styleUrl: './add-todo.component.css'
 })
-export class AddTodoComponent implements OnInit {
-  ngOnInit(): void {
-    console.log("here")
-  }
-  name = input<string>();
+export class AddTodoComponent{
   @Output() todoEmitter = new EventEmitter<Todo>();
+
   todo: Todo = {
     title:'',
     description: ''
   }
+
   activeModal = inject(NgbActiveModal);
   
   addTodo() {

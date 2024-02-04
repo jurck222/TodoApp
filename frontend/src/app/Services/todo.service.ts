@@ -22,4 +22,8 @@ export class TodoService {
   deleteTodo(id:number): any{
     return this.http.delete(`${this.apiUrl}/deleteTodo/${id}`);
   }
+
+  updateTodo(id:number, todo: Todo): any{
+    return this.http.put(`${this.apiUrl}/updateTodo/${id}`, todo);
+  }
 }

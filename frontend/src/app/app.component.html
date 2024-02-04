@@ -8,22 +8,18 @@
     </div>
   </div>
   
-  
-  
   @if (todos) {
     @for (todo of todos; track $index) {
     <div  class="row justify-content-md-center" >
       <div class="col-md-4">
-      <p class="border rounded" style="padding-top: 10px; align-items: center;" >{{ todo.title }} <input class="form-check-input" type="checkbox" /></p>
+        <p (click)="openTodo(todo)" class="border rounded" style="padding-top: 10px; align-items: center;" >
+          {{ todo.title }}
+        </p>
       </div>
       <div class="col-md-1">
         <img src="../assets/delete.png" style="height: 20px; width: 20px;" (click)="deleteTodo(todo)">
         </div>
     </div>
-    
     }
-    
   }
-  
- 
 </div>
