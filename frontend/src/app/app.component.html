@@ -1,25 +1,37 @@
 <div class="container justify-content-md-center">
   <div class="row justify-content-md-center">
     <div class="col-md-auto">
-    <h1 >TodoApp </h1> 
+      <h1 class="display-1">TodoApp</h1>
     </div>
-    <div  class="col-md-auto">
-      <img (click)="clickAdd()" src="../assets/add.png"/>
+    <div class="col-md-auto">
+      <img class="add-button" (click)="clickAdd()" src="../assets/add.png" />
     </div>
   </div>
-  
-  @if (todos) {
-    @for (todo of todos; track $index) {
-    <div  class="row justify-content-md-center" >
-      <div class="col-md-4">
-        <p (click)="openTodo(todo)" class="border rounded" style="padding-top: 10px; align-items: center;" >
+
+  @if (todos) { 
+  @for (todo of todos; track $index) {
+  <div class="row justify-content-md-center">
+    <div class="col-md-4 todo-container form-check form-switch">
+      <div class="border rounded todo-content">
+        <span (click)="openTodo(todo)">
           {{ todo.title }}
-        </p>
+        </span>
+        <input
+          class="form-check-input switch"
+          type="checkbox"
+          id="flexSwitchCheckDefault"
+          [(ngModel)]="isDone"
+        />
       </div>
-      <div class="col-md-1">
-        <img src="../assets/delete.png" style="height: 20px; width: 20px;" (click)="deleteTodo(todo)">
-        </div>
     </div>
-    }
+    <div class="col-md-auto">
+      <img
+        class="delete-button"
+        src="../assets/delete.png"
+        (click)="deleteTodo(todo)"
+      />
+    </div>
+  </div>
   }
+ }
 </div>
